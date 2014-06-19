@@ -19,9 +19,11 @@ active: documentation
             <p><b>GET</b></p>
             <p>Ritorna la lista dei drain nel sistema con indicazione della loro configurazione e relativa formula in caso di drain virtuali.</p>
             <p><b>Result</b></p>
-            <div id="registry-drains-get">
-                
-            </div>
+            <button class="btn btn-default" id="collapse-btn">Collapse</button>
+            <button class="btn btn-default" id="expand-btn">Expand</button>
+            
+            <div class="code" id="registry-drains-get"></div>
+            
             <p><b>POST</b></p>
             <p>Permette di creare o modificare un drain. Nel caso l'identificativo del drain sia già presente viene effettuato l'aggiornamento delle informazioni ad esso collegate. Nel caso invece che il drain non sia disponibile, ne viene creato uno nuovo di tipo virtuale. </p>
             <h4><b>/registry/drains/{drain}</b></h4>
