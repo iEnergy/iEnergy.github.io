@@ -12,16 +12,14 @@ t:
   ita:
     home:  "Home"
     about: "About"
-    demo : "Demo online"
-    use : "Usa online"
+    developer : "Sviluppatori"
     contact : "Contatti"
     language : "Lingua"
     back_to_top : "Torna su"
   eng:
     home:  "Home"
     about: "About"
-    demo : "Online demo"
-    use : "Online use"
+    developer : "Developer"
     contact : "Contact"
     language : "Language"
     back_to_top : "Back to top"
