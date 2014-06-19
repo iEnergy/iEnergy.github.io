@@ -1,12 +1,12 @@
-/* 
-    Document   : custom
-    Created on : Jun 19, 2014, 9:31:47 AM
-    Author     : alessandra
-    Description:
-        Purpose of the stylesheet follows.
-*/
 
-root { 
-    display: block;
+/*
+    code snippet style 
+---------------------------------*/
+
+.code{
+    background-color: #d6d6d6;
+    margin: 10px;
+    padding:10px;
+    font-family: monospace;
+    border:#080808 dashed thin;
 }
-

@@ -16,6 +16,10 @@ t:
     contact : "Contatti"
     language : "Lingua"
     back_to_top : "Torna su"
+    architecture : "Architettura"
+    components : "Componenti"
+    installation : "Installazione"
+    restapi : "REST API"
   eng:
     home:  "Home"
     about: "About"
@@ -23,3 +27,7 @@ t:
     contact : "Contact"
     language : "Language"
     back_to_top : "Back to top"
+    architecture : "Architecture"
+    components : "Components"
+    installation : "Installation"
+    restapi : "REST API"
