@@ -1,4 +1,14 @@
+/* 
+    side nav bar style
+---------------------------------*/
+#documentation-side-navbar, #developer-side-navbar{
+    position:fixed;
+    width: 12%;
+}
 
+li.list-group-item.active a{
+    color: white;
+}
 /*
     code snippet style 
 ---------------------------------*/

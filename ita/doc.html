@@ -1,0 +1,164 @@
+---
+title: Documentazione
+layout: default
+lang: ita
+active: documentation
+---
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+        {% include documentation-side-navbar.html %}
+    </div>
+    <div class="col-lg-9 col-md-9">
+        <section id="registry-configuration">
+            <div class="page-header">
+                <h2>Registry/Configuration </h2>
+            </div>
+            <p>In questo modulo vengono descritte le api di gestione delle anagrafiche e di configurazione dei sistema. </p>
+            <h4><b>/registry/drains</b></h4>
+            <p>Questa api permette la gestione delle anagrafiche dei drain all'interno del sistema. <b>Attenzione</b> la popolazione delle relativa tabella è effettuata in automatico dal sistema per quanto riguarda i drain reali e non virtuali (cioè composti dalla somma di più variabili).</p>
+            <p><b>GET</b></p>
+            <p>Ritorna la lista dei drain nel sistema con indicazione della loro configurazione e relativa formula in caso di drain virtuali.</p>
+            <p><b>POST</b></p>
+            <p>Permette di creare o modificare un drain. Nel caso l'identificativo del drain sia già presente viene effettuato l'aggiornamento delle informazioni ad esso collegate. Nel caso invece che il drain non sia disponibile, ne viene creato uno nuovo di tipo virtuale. </p>
+            <h4><b>/registry/drains/{drain}</b></h4>
+            <p>Questa API permette la gestione dei dettagli dell'anagrafica di un drain. </p>
+            <p><b>GET</b></p>
+            <p>Ritorna il dettaglio del drain nel sistema con l' indicazione della configurazione e della formula in caso di drain virtuali. </p>
+        </section>
+        <section id="measures">
+            <div class="page-header">
+                <h2>Measures </h2>
+            </div>
+            <p>In questa sezione vengono descritte le API per la lettura delle misure dalla base dati</p>
+            <h4><b>/measure/instants/{drain}</b></h4>
+            <p><b>GET</b></p>
+            <p>Ritorna il valore relativo ad un drain sia virtuale che reale </p>
+            <h4><b>/measure/details/{drain}</b></h4>
+            <h4><b>/measure/history/{drain}</b></h4>
+            <p><b>GET</b></p>
+            <p>Le due api sono state concepite nello stesso modo, cambia il livello di dettaglio richiesto per la versione details ritorna i dati al dettaglio ogni 10 minuti, mentre history ritorna i dati storici con il dettaglio di 1 ora.</p>
+            <p>I parametri ammessi per l'api sono:</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parametro</th>
+                        <th>Valore</th>
+                        <th>Descrizione</th>
+                        <th>Optional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>start</td>
+                        <td>Date (yyyy-MM-dd'T'HH:mm:ssZ)<br>
+                            Formato ISO 8601</td>
+                        <td>Indica la data di invio da cui fare la ricerca<br>
+                        (default: una ora prima di end per details e 2 ore per 10 ore per history)</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>Date (yyyy-MM-dd'T'HH:mm:ssZ)<br>
+                        Formato ISO 8601</td>
+                        <td>Indica data di fine su cui effettuare la ricerca<br>
+                        (default: now)</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>timeAggregation</td>
+                        <td></td>
+                        <td>Indica il livello di aggregazione temporale dei dati<br>
+                        Valori possibili: YEAR, MONTH, DAY, HOUR, MINUTE <br>
+                        (default: MINUTE)</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>measureArregation</td>
+                        <td></td>
+                        <td>Indica la funzione di aggregazione da utilizzare supporto per AVG, SUM, MAX, MIN. <br>
+                            Effettua l'override della aggregationFunction della misura</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4><b>/measure/details/time</b></h4>
+            <h4><b>/measure/history/time</b></h4>
+            <p><b>GET</b></p>
+            <p>Ritorna il range temporale delle misure memorizzate. In questo modo è possibile sapere la data di inzio e di fine delle misure.</p>
+        </section>
+        <section id="confort">
+            <div class="page-header">
+                <h2>Confort</h2>
+            </div>
+            <p>Gestione degli indicatori di confort ambientale </p>
+            <h4><b>/confort/indicators</b></h4>
+            <p><b>GET</b></p>
+            <p>Ritorna la lista di tutti gli indicatori di confort inseriti nel sistema:</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parametro</th>
+                        <th>Valore</th>
+                        <th>Descrizione</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>start</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indica il datetime di inizio per il calcolo del risultato di una votazione<br>
+                        (default: datetime nel momento di chiamata GET)</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indica il datetime di fine per il calcolo del risultato di una votazione<br>
+                        (default: datetime start meno 1 ora)</td>                     
+                    </tr>
+                </tbody>
+            </table>
+            <p>Se non vengono passati start/end si calcola il risultato sulle votazioni dell'utima ora.</p>
+            <p><b>POST</b></p>
+            <p>Permette di modificare/create i dati relativi ad in indicatore di confort</p>
+            <p>Nel caso il nome dell'indicatore sia già stato definito, l'applicazione si occupa di effettuare l'aggiornamento dell'indicatore già esistente.</p>
+            <h4><b>/confort/indicators/{name}</b></h4>
+            <p>Gestione delle opzioni di voto di un dato indicatore.</p>
+            <p><b>GET</b></p>
+            <p>Ritorna le opzioni disponibili per le votazioni di un dato indicatore (dipendente dal tipo).</p>
+            <h4><b>/confort/indicators/{name}/votes</b></h4>
+            <p>Gestione dei voti relativi a un dato indicatore</p>
+            <p><b>GET</b></p>
+            <p>Ritorna la lista dei voti forniti per un dato indicatore</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parametro</th>
+                        <th>Valore</th>
+                        <th>Descrizione</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>start</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indica il datetime di inizio per la selezione dei voti<br>
+                        (default: datetime nel momento di chiamata GET)</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indica il datetime di fine per la selezione dei voti<br>
+                        (default: datetime start meno 1 ora)</td>                     
+                    </tr>
+                </tbody>
+            </table>
+            <p>Se non vengono passati start/end si calcola il risultato sulle votazioni dell'utima ora</p>
+            <p><b>POST</b></p>
+            <p>Permette ad un utente di esprimere la propria opinione in merito ad un dato indicatore, i valori permessi sono forniti alla chiamata confort/indicators/{name}/options:</p>
+        </section>
+    </div>
+</div>

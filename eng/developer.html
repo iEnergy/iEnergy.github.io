@@ -4,38 +4,30 @@ layout: default
 lang: eng
 active: developer
 ---
+<div class="row"> 
+    <div class="col-lg-3 col-md-3">
+        {% include developer-side-navbar.html %}
+    </div>
+    <div class="col-lg-9 col-md-9">  
+        <section id="architecture">
+            <div class="page-header">
+                <h2>{{ site.t[page.lang].architecture }}</h2>
+            </div>
 
-<div class="container">
-    <div class="row"> 
-        <div id="developer-side-navbar" class="col-lg-3 col-md-3">
-            {% include developer-side-navbar.html %}
-        </div>
-        <div class="col-lg-9 col-md-9">  
-            <section id="architecture">
-                <div class="page-header">
-                    <h2>{{ site.t[page.lang].architecture }}</h2>
-                </div>
-                
-                
-                
-            </section>
-            <section id="components">
-                <div class="page-header">
-                    <h2>{{ site.t[page.lang].components }}</h2>
-                </div>
-                
-            </section>
-            <section id="installation">
-                <div class="page-header">
-                    <h2>{{ site.t[page.lang].installation }}</h2>
-                </div>
-                
-            </section>
-            <section id="restapi">
-                <div class="page-header">
-                    <h2>{{ site.t[page.lang].restapi }}</h2>
-                </div>
-            </section>
-        </div>
+
+
+        </section>
+        <section id="components">
+            <div class="page-header">
+                <h2>{{ site.t[page.lang].components }}</h2>
+            </div>
+
+        </section>
+        <section id="installation">
+            <div class="page-header">
+                <h2>{{ site.t[page.lang].installation }}</h2>
+            </div>
+
+        </section>
     </div>
 </div>
