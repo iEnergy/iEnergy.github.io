@@ -1,0 +1,27 @@
+name: IEnergy
+description: 
+  
+url: "http://ienergy-test.github.io"
+
+paginate: 10
+
+markdown: rdiscount
+
+# translation tags
+t:
+  ita:
+    home:  "Home"
+    about: "About"
+    demo : "Demo online"
+    use : "Usa online"
+    contact : "Contatti"
+    language : "Lingua"
+    back_to_top : "Torna su"
+  eng:
+    home:  "Home"
+    about: "About"
+    demo : "Online demo"
+    use : "Online use"
+    contact : "Contact"
+    language : "Language"
+    back_to_top : "Back to top"
