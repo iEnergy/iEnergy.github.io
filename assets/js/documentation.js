@@ -365,6 +365,18 @@ $("#confort-indicator-name-get").JSONView(confort_indicator_name_get_json,{colla
 };
   $("#confort-indicator-name-votes-post").JSONView(confort_indicator_name_votes_post_json,{collapsed: true, nl2br: true});
   
+  var processing_post = 
+{
+    "datapoints": [
+        {
+            "at": "2013-11-29T16:50:01.000+0100",
+            "value": "350.0",
+            "unitOfMeasure": "ppm"
+        }
+    ]
+};
+
+  $("#processing-post").JSONView(confort_indicator_name_votes_post_json,{collapsed: true, nl2br: true});
   
 });
 
