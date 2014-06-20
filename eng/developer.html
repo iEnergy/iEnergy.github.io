@@ -13,7 +13,42 @@ active: developer
             <div class="page-header">
                 <h2>{{ site.t[page.lang].architecture }}</h2>
             </div>
-
+            <h3> DB Postgres scheme </h3>
+                <p> The figure below show the ER scheme of iEnergy database.</p>
+                <img src="../assets/images/db_iEnergy.png"/>
+                <p>Here are the details of involved tables:</p>
+                <p><b>da_drain_descriptor</b></p>
+                <p>This table contains the description/definition of drains described in the system. The table have this information:</p>
+                <ul>
+                    <li><b>id</b>: drain's univocal identification </li>
+                    <li><b>drain</b>: drain's name (uppercase)</li>
+                    <li><b>description</b>: drain's description</li>
+                    <li><b>unit</b>: drain's unit of measure</li>
+                    <li><b>historyfunction</b>: aggregation fuction to be used for data storage process (from detail to history). Supported function: AVG, SUM, FIRST, LAST</li>
+                    <li><b>aggregationfunction</b>: aggregation fuction to be used during querying phase if temporal aggregation different from minute (optional parameter, default is AVG). Possible values: AVG, SUM, MAX, MIN</li>
+                    <li><b>real</b>: specifies if a measure is real or virtuale, that is it is obtained by the sum or the subtraction of powers.</li>
+                </ul>   
+                <p><b>da_drain_formula</b></p>
+                <p>This table contains the decription of formulas in case of virtual drains. Supported operation is just sum./p>
+                <ul>
+                    <li><b>drain_id</b>: drain's identification corresponding to the result of a formula. </li>
+                    <li><b>drain_argument_id</b>: drain's identification of formula's argument</li>
+                    <li><b>sign</b>: sign to be applied to the formula (1 for sum, -1 for subtraction) </li>
+                </ul>  
+                <p><b>da_measure_XX</b></p>
+                <p>This table contains measures related to sensors, defined during the installation phase. It contains time and value of the measure. Tables are two: <b>da_measure_history</b> and <b>da_measure_detail</b>, that contain respectively historical measures (hourly) and detailed measures, depending on spchain configuration.</p>
+                <p><b>da_measure_rt</b></p>
+                <p>This table contains instant measures of meters. Updating time depends onthe technology uses (e.g. es modbus polling every 10 seconds). </p>
+                <p><b>da_confort_indicator</b></p>
+                <p>This table contains the definition of confort indicators. </p>
+                <ul>
+                    <li><b>id</b>: indicator's identification </li>
+                    <li><b>name</b>: indicator's name </li>
+                    <li><b>description</b>: indicator's description </li>
+                    <li><b>function</b>: aggregation function to be used for votes </li>
+                    <li><b>type</b>: indicator's type </p>
+                </ul>
+                <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
 
 
         </section>
@@ -21,13 +56,101 @@ active: developer
             <div class="page-header">
                 <h2>{{ site.t[page.lang].components }}</h2>
             </div>
-
+            <p> Here are listed the required components for a system based on iEnergy</p>
+                <h3>Bundle iEnergy</h3>
+                <p>For the correct working of iEnergy, it is necessary the domotic gateway Dog, that allowes the comunication with different technologies installed on fiels (<a href="http://dog-gateway.github.io/">http://dog-gateway.github.io/</a>)</p>
+                <p>It is necessary to add the bundle it.proximacentauri.ienergy.osgi, that is responsable for storage og instant/detailes measure in the database making them available for the user.</p>
+                <h3>iEnergyDa</h3>
+                <p>This module is in charge of historical storage of data from Dod to Postgres database. Moreover,it supplie some API API REST/JSON available for different type of clients (as web or mobile).</p>
+                <p>The measures management module allows to handle with detailed (every 10 minutes), historical (hourly cadency) and real-time measures. Management module allows to use some aggregation function (as sum, average, etc..) in different levels of temporal aggregation (minutes, hours, days ...). 
+                   Here it is also available a configuration interface that allows to define the modality of measures (e.g.: type of storage).</p>
+                <p>The module is in charge of confort indicators management.</p>
+                <h3>ETL</h3>
+                <p>Module for the trasformation of data from detailed to historical according to the sensors description in the database, chosen during the configuration phase. </p>
+                <h3>IEnergyUtil</h3>
+                <p>This module allows to access as administrator to drains and confort indicators management.</p>
+                <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
         </section>
         <section id="installation">
             <div class="page-header">
                 <h2>{{ site.t[page.lang].installation }}</h2>
             </div>
-
+             <h3>Requirements</h3>
+                <p>The requirements for iEnergy installation are:</p>
+                <ul>
+                    <li>Server Linux debian-like</li>
+                    <li>Java 1.7+</li>
+                    <li>Tomcat 7+</li>
+                    <li>Dog 2.5+</li>
+                    <li>Postgres 9+</li>
+                </ul>
+                <h3>Dog</h3>
+                <p>For the field part it is necessary to follow the guide for Dog installation, available on the project website <a href="http://dog-gateway.github.io/">http://dog-gateway.github.io/</a>, to which add the bundle it.proximacentauri.ienergy.osgi. </p>
+                <p> Necessary modules in Dog are:</p>
+                <ul>
+                    <li>spchain - stream processor</li>
+                    <li>xively/cosmoutlet</li>
+                    <li>Network Driver</li>
+                </ul>
+                <p>The configuration requiresthe configuration file it.proximacentauri.ienergy.osgi.config, that includes: </p>
+                <div class="code">
+                    # mapping between dog devices and measure<br>
+                    source.mapping=sourceDeviceMapping.xml<br>
+                    #source drain remove pattern (reg expression)<br>
+                    source.removePattern=-raw<br>
+                    db.driver=org.postgresql.Driver<br>
+                    db.url=jdbc:postgresql://localhost:5432/ienergy<br>
+                    db.username=xxx<br>
+                    db.password=xxx<br>
+                    db.maxActive=10<br>
+                </div>
+                <p>Where there are </p>
+                <ul>
+                    <li>source.mapping - indicates the mapping file for the association of Dog event and drain's name. </li>
+                    <li>source.removePattern - indicates the pattern to remove from drain's name (regular expression). This is necessary because the eventes enetering in spchain are defined with the name raw and at the outp they don't have this name since they are processed measures.The pattern is aimed the link processed measure and real time measure.</li>
+                    <li>db.X - indicate access credetianl for the database</li>
+                </ul>
+                <p> The second step of configuration regards xively COSMOutlet.config/it.polito.elite.dog.addons.xively.client.cfg</p>
+                <div class="code">
+                    # ----------- COSMOutlet configuration -------------------
+                    # the API key, only needed for the real COSM web site<br>
+                    # cosm.Key =<br>
+                    # the media type to be delivered, either application/xml or application/json<br>
+                    cosm.mediaType = application/json<br>
+                    # The COSM base datastream uri for measures (must end with a trailing /)<br>
+                    cosm.events.feedURL = http://localhost:8080/JeerpDa/processing/<br>
+                    # The default feed id for measures (no trailing /)<br>
+                    cosm.events.default = 106199<br>
+                    # The COSM base datastream uri for alerts (must end with a trailing /)<br>
+                    cosm.alerts.feedURL = http://localhost:8080/IEnergyDa/alerts/<br>
+                    # The default feed id for alerts (no trailing /)<br>
+                    cosm.alerts.default = 106199<br>
+                    # The COSM waiting list size (number of alerts/events sent in the same request, up to 500)<br>
+                    cosm.waitingList.size = 1<br>
+                    # The delivery queue maximum size<br>
+                    # if set to 0 the queue has no limit (be aware of possible out-of-memory errors)<br>
+                    cosm.deliveryQueue.size = 100<br>
+                    # The waiting list self-tune flag, <br>
+                    # if true the delivery queue automatically changes the size of the delivered JSON array<br>
+                    # to avoid (or at least limit) event dropping<br>
+                    cosm.deliveryQueue.selfTune = true<br>
+                </div>
+                <p>The last step is to create the database according to the schema in showed the first section.</p>
+                
+                <h3>IEnergyDa</h3>
+                <p>The installation of analysis module is a .war that can be installed in tomcat 7+. The configuration is very easy and affects the file jeerpda.properties</p>
+                <div class="code">
+                    db.url=jdbc:postgresql://10.10.10.196:5432/ienergy
+                    db.username=xxx
+                    db.password=xxx
+                </div>
+                <p>All it is needed ar access credetial for the Postgres database.</p>
+                <p>If you have to configure administration functions that are protected by spring security, it is necessary to configure the file spring-security.xml</p>
+                <h3>IEnergyUtil</h3>
+                <p> It is sufficient the deploy for this application </p>
+                <h3>ETL</h3>
+                <p>For ETL, it is necessary to proceed with the configuration of database parameters</p>
+                <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
         </section>
     </div>
 </div>

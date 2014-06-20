@@ -18,20 +18,20 @@ active: developer
                 <h3> Schema DB Postgres </h3>
                 <p> La figura mostra lo schema ER del database di iEnergy.</p>
                 <img src="../assets/images/db_iEnergy.png"/>
-                <p>Di seguito è riportato il dettaglio delle relazioni coinvolte:</p>
+                <p>Di seguito è riportato il dettaglio delle tabelle coinvolte:</p>
                 <p><b>da_drain_descriptor</b></p>
-                <p>Questa relazione contiene la descrizione/definizione dei drain definiti nel sistema, nel dettaglio la tabella contiene le seguenti informazioni:</p>
+                <p>Questa tabella contiene la descrizione/definizione dei drain definiti nel sistema, nel dettaglio la tabella contiene le seguenti informazioni:</p>
                 <ul>
                     <li><b>id</b>: identificativo univoco del drain </li>
                     <li><b>drain</b>: nome del drain (uppercase)</li>
                     <li><b>description</b>: descrizione del drain</li>
                     <li><b>unit</b>: unità di misura del drain</li>
-                    <li><b>historyfunction</b>: funzione di aggregazione da utilizzare durante il processo di storicizzazione dei dati (passaggio da detail a history). Funzioni al momento supportate (AVG, SUM, FIRST, LAST)</li>
+                    <li><b>historyfunction</b>: funzione di aggregazione da utilizzare durante il processo di storicizzazione dei dati (passaggio da detail a history). Funzioni al momento supportate: AVG, SUM, FIRST, LAST</li>
                     <li><b>aggregationfunction</b>: funzione di aggregazione da utilizzare in fase di interrogazione con aggregazioni temporali diverse dal minuto (paramatro opzionale, default pari ad AVG). Valori possibili AVG, SUM, MAX, MIN</li>
-                    <li><b>real</b>: indica se ma misura è reale oppure ottenuta tramite la somma o sottrazione di potenze quindi virtuale</li>
+                    <li><b>real</b>: indica se una misura è reale oppure virtuale, cioè ottenuta tramite la somma o la sottrazione di potenze</li>
                 </ul>   
                 <p><b>da_drain_formula</b></p>
-                <p>Questa relazione contiene la descrizione delle formule nel caso di drain di tipo virtuale con supporto delle sola operazione di somma.</p>
+                <p>Questa tabella contiene la descrizione delle formule nel caso di drain di tipo virtuale con supporto della sola operazione di somma.</p>
                 <ul>
                     <li><b>drain_id</b>: identificativo del drain corrispondente alla formula </li>
                     <li><b>drain_argument_id</b>: identificativo del drain facente parte della formula (argomento)</li>
@@ -44,10 +44,10 @@ active: developer
                 <p><b>da_confort_indicator</b></p>
                 <p>Contiene la definizione degli indicatori di confort </p>
                 <ul>
-                    <li><b>id</b>: identificativo del drain </li>
-                    <li><b>name</b>: il nome del indicatore di confort </li>
-                    <li><b>description</b>: descrizione del drain </li>
-                    <li><b>function</b>: definisce la funziona di aggregazione da applicare alle votazioni </li>
+                    <li><b>id</b>: identificativo dell'indicatore</li>
+                    <li><b>name</b>: il nome dell'indicatore di confort </li>
+                    <li><b>description</b>: descrizione dell'indicatore </li>
+                    <li><b>function</b>: definisce la funzione di aggregazione da applicare alle votazioni </li>
                     <li><b>type</b>: indica il tipo di indicatore di confort </p>
                 </ul>
                 <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
@@ -58,11 +58,11 @@ active: developer
                 </div>
                 <p> Di seguito sono elencate le componenti necessarie al corretto funzionamento di un sistema basato su iEnergy</p>
                 <h3>Bundle iEnergy</h3>
-                <p>Per il corretto funzionamento di iEnergy è necessario il gatway domotico Dog, che permette la comunicazione del sistema con varie tecnologie di dispositivi installati sul campo (http://dog-gateway.github.io/)</p>
+                <p>Per il corretto funzionamento di iEnergy è necessario il gateway domotico Dog, che permette la comunicazione del sistema con varie tecnologie di dispositivi installati sul campo (<a href="http://dog-gateway.github.io/">http://dog-gateway.github.io/</a>)</p>
                 <p>In aggiunta alla versione di Dog, è necessario aggiungere il bundle it.proximacentauri.ienergy.osgi, il quale si occupa di memorizzare le misure istantanee/dettaglio nella base dati rendendole disponibili al utente.</p>
                 <h3>iEnergyDa</h3>
                 <p>Questo modulo si occupa della memorizzazione storica dei dati provenienti da Dog nella base dati di Postgres. Inoltre si occupa di fornire una serie di API REST/JSON disponibili a diverse tipologie di client (come web o mobile).</p>
-                <p>La parte di gestione delle misure permette la gestione delle misure di dettaglio (cadenza ongi 10 minuti), storiche (cadenza oraria) e real-time provenienti dal campo. Il modulo di gestione non restituisce semplicemente le misure ma consente anche di utilizzare delle funzioni di aggregazione (somme, medie etc..) a vari livelli di aggregazione temporale (minuti, ore, giorni ...). 
+                <p>La parte di gestione delle misure permette la gestione delle misure di dettaglio (cadenza ogni 10 minuti), storiche (cadenza oraria) e real-time provenienti dal campo. Il modulo di gestione non restituisce semplicemente le misure ma consente anche di utilizzare delle funzioni di aggregazione (somme, medie etc..) a vari livelli di aggregazione temporale (minuti, ore, giorni ...). 
                     Sempre nel contesto delle gestione delle misure è disponibile un'interfaccia di configurazione, attraverso cui è possibbile definire le modalità di effettuazione delle misure (es: tipo di storicizzazione).</p>
                 <p>Il modulo si occupa anche della gestione degli indicatori di confort ambientale percepito degli utenti.</p>
                 <h3>ETL</h3>
@@ -85,7 +85,7 @@ active: developer
                     <li>Postgres 9+</li>
                 </ul>
                 <h3>Dog</h3>
-                <p>Per la parte del campo bisogna fare affidamento all'installazione di Dog secondo quanto riportato sul sito del progetto http://dog-gateway.github.io/, a cui aggiungere il bundle it.proximacentauri.ienergy.osgi. </p>
+                <p>Per la parte del campo bisogna fare affidamento all'installazione di Dog secondo quanto riportato sul sito del progetto <a href="http://dog-gateway.github.io/">http://dog-gateway.github.io/</a>, a cui aggiungere il bundle it.proximacentauri.ienergy.osgi. </p>
                 <p> I moduli necessari in Dog sono:</p>
                 <ul>
                     <li>spchain - stream processor</li>
@@ -107,7 +107,7 @@ active: developer
                 <p>Dove abbiamo </p>
                 <ul>
                     <li>source.mapping - indica il file di mapping nell'associazione tra eventi di dog e il nome dei drain </li>
-                    <li>source.removePattern - indica il pattern da rimuovere sul nome dei drain delle misure (espressione regolare). Questo è necessario perchè all'ingresso in spchaingli eventi sono generalmente con il nome raw e all'uscita non presentano questo nome essendo una misura processata. Il pattern ha lo scopo di mantenere l'associazione tra misura lavorata e misura real time.  </li>
+                    <li>source.removePattern - indica il pattern da rimuovere sul nome dei drain delle misure (espressione regolare). Questo è necessario perchè all'ingresso in spchain gli eventi sono generalmente con il nome raw e all'uscita non presentano questo nome essendo una misura processata. Il pattern ha lo scopo di mantenere l'associazione tra misura lavorata e misura real time.  </li>
                     <li>db.X - indicare i parametri di accesso alla base dati</li>
                 </ul>
                 <p> Il secondo punto di configurazione riguarda xively COSMOutlet.config/it.polito.elite.dog.addons.xively.client.cfg</p>
@@ -149,7 +149,7 @@ active: developer
                 <h3>IEnergyUtil</h3>
                 <p> Per questa applicazione è sufficiente il deploy </p>
                 <h3>ETL</h3>
-                <p>Per la parte di trasformazione etl, è necessario procedere alla configurazione dei parametri di configurazione del database</p>
+                <p>Per la parte di trasformazione etl, è necessario procedere alla configurazione dei parametri del database</p>
                 <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
             </section>
         </div>
