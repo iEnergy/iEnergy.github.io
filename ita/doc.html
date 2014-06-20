@@ -9,6 +9,7 @@ active: documentation
         {% include documentation-side-navbar.html %}
     </div>
     <div class="col-lg-9 col-md-9">
+          <p>In questa sezione vengono descritte le api del sistema iEnergy </p>
         <section id="registry-configuration">
             <div class="page-header">
                 <h2>Registry/Configuration </h2>
@@ -19,17 +20,30 @@ active: documentation
             <p><b>GET</b></p>
             <p>Ritorna la lista dei drain nel sistema con indicazione della loro configurazione e relativa formula in caso di drain virtuali.</p>
             <p><b>Result</b></p>
-            <button class="btn btn-default" id="collapse-btn">Collapse</button>
-            <button class="btn btn-default" id="expand-btn">Expand</button>
+            <button class="btn btn-default json-collapse" id="registry-drains-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="registry-drains-get-expand-btn">Expand</button>
             
             <div class="code" id="registry-drains-get"></div>
             
             <p><b>POST</b></p>
             <p>Permette di creare o modificare un drain. Nel caso l'identificativo del drain sia già presente viene effettuato l'aggiornamento delle informazioni ad esso collegate. Nel caso invece che il drain non sia disponibile, ne viene creato uno nuovo di tipo virtuale. </p>
+            <p><b>Request</b></p>
+            <button class="btn btn-default json-collapse" id="registry-drains-post-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="registry-drains-post-expand-btn">Expand</button>
+            <div class="code" id="registry-drains-post"></div>
+            
             <h4><b>/registry/drains/{drain}</b></h4>
             <p>Questa API permette la gestione dei dettagli dell'anagrafica di un drain. </p>
+            
             <p><b>GET</b></p>
             <p>Ritorna il dettaglio del drain nel sistema con l' indicazione della configurazione e della formula in caso di drain virtuali. </p>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="registry-drains-drain-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="registry-drains-drain-get-expand-btn">Expand</button>
+            <div class="code" id="registry-drains-drain-get"></div>
+            
+            <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
+            
         </section>
         <section id="measures">
             <div class="page-header">
@@ -37,8 +51,12 @@ active: documentation
             </div>
             <p>In questa sezione vengono descritte le API per la lettura delle misure dalla base dati</p>
             <h4><b>/measure/instants/{drain}</b></h4>
+            
             <p><b>GET</b></p>
             <p>Ritorna il valore relativo ad un drain sia virtuale che reale </p>
+            <p><b>Result</b></p>
+            <div class="code" id="measure-instants-drain-get"></div>
+            
             <h4><b>/measure/details/{drain}</b></h4>
             <h4><b>/measure/history/{drain}</b></h4>
             <p><b>GET</b></p>
@@ -87,10 +105,20 @@ active: documentation
                     </tr>
                 </tbody>
             </table>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="measure-detail-history-drain-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="measure-detail-history-drain-get-expand-btn">Expand</button>
+            <div class="code" id="measure-detail-history-drain-get"></div>
+            
             <h4><b>/measure/details/time</b></h4>
             <h4><b>/measure/history/time</b></h4>
             <p><b>GET</b></p>
             <p>Ritorna il range temporale delle misure memorizzate. In questo modo è possibile sapere la data di inzio e di fine delle misure.</p>
+            <p><b>Result</b></p>
+            <div class="code" id="measure-detail-history-time-get"></div>
+            
+            <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
+            
         </section>
         <section id="confort">
             <div class="page-header">
@@ -125,14 +153,32 @@ active: documentation
                     </tr>
                 </tbody>
             </table>
+            <p><b>Result</b></p>
+            <div class="code" id="confort-indicator-get"></div>
             <p>Se non vengono passati start/end si calcola il risultato sulle votazioni dell'utima ora.</p>
             <p><b>POST</b></p>
-            <p>Permette di modificare/create i dati relativi ad in indicatore di confort</p>
+            <p><b>Request</b></p>
+            <div class="code" id="confort-indicator-post"></div>
+            <p>Permette di modificare/creare i dati relativi ad in indicatore di confort</p>
             <p>Nel caso il nome dell'indicatore sia già stato definito, l'applicazione si occupa di effettuare l'aggiornamento dell'indicatore già esistente.</p>
+            
             <h4><b>/confort/indicators/{name}</b></h4>
-            <p>Gestione delle opzioni di voto di un dato indicatore.</p>
+            <p>Gestione del dettaglio di un indicatore di confort</p>
+            
             <p><b>GET</b></p>
-            <p>Ritorna le opzioni disponibili per le votazioni di un dato indicatore (dipendente dal tipo).</p>
+           
+            <p>Ritorna il dettaglio di un dato indicatore </p>
+            <p><b>Result</b></p>
+            <div class="code" id="confort-indicator-name-get"></div>
+            <h4><b>/confort/indicators/{name}/options</b></h4>
+            <p>Gestione delle opzioni di voto di un dato indicatore </p>
+            <p><b>GET</b></p>
+            <p>Ritorna le opzioni disponibili per le votazioni di un dato indicatore (le opzioni sono dipendenti dal tipo di indicatore)</p>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="confort-indicator-name-options-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="confort-indicator-name-options-get-expand-btn">Expand</button>
+            <div class="code" id="confort-indicator-name-options-get"></div>
+            
             <h4><b>/confort/indicators/{name}/votes</b></h4>
             <p>Gestione dei voti relativi a un dato indicatore</p>
             <p><b>GET</b></p>
@@ -162,9 +208,19 @@ active: documentation
                     </tr>
                 </tbody>
             </table>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="confort-indicator-name-votes-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="confort-indicator-name-votes-get-expand-btn">Expand</button>
+            <div class="code" id="confort-indicator-name-votes-get"></div>
+            
             <p>Se non vengono passati start/end si calcola il risultato sulle votazioni dell'utima ora</p>
             <p><b>POST</b></p>
             <p>Permette ad un utente di esprimere la propria opinione in merito ad un dato indicatore, i valori permessi sono forniti alla chiamata confort/indicators/{name}/options:</p>
+            <p><b>Request</b></p>
+            <div class="code" id="confort-indicator-name-votes-post"></div>
+            
+            <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
+            
         </section>
     </div>
 </div>
