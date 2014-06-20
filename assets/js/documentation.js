@@ -1,6 +1,4 @@
 $(document).ready(function(){
-    console.log('ready');
-   
     var registry_drains_get_json = 
           [
    {
