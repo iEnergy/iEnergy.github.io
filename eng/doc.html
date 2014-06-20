@@ -4,4 +4,223 @@ layout: default
 lang: eng
 active: documentation
 ---
-
+<div class="row">
+    <div class="col-lg-3 col-md-3">
+        {% include documentation-side-navbar.html %}
+    </div>
+    <div class="col-lg-9 col-md-9">
+          <p>In this section are descrive iEnergy API </p>
+        <section id="registry-configuration">
+            <div class="page-header">
+                <h2>Registry/Configuration </h2>
+            </div>
+            <p>Here are described API for drain registry management and system configuration. </p>
+            <h4><b>/registry/drains</b></h4>
+            <p>This api allows the management of drain registry configuration in the system. <b>Be careful</b> table population is automatic for real drains, not for virtual ones (that are obtained from the sum of several variables).</p>
+            <p><b>GET</b></p>
+            <p>Returns the list of system drain, with the specification of their configuration and the formula in case of a virtual drain.</p>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="registry-drains-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="registry-drains-get-expand-btn">Expand</button>
+            
+            <div class="code" id="registry-drains-get"></div>
+            
+            <p><b>POST</b></p>
+            <p>Allows to create or modify a drain. If the id is already present in the database, the system proceeds updating of related information. In case the drain is not present the system proceeds with the creation of a virtual drain. </p>
+            <p><b>Request</b></p>
+            <button class="btn btn-default json-collapse" id="registry-drains-post-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="registry-drains-post-expand-btn">Expand</button>
+            <div class="code" id="registry-drains-post"></div>
+            
+            <h4><b>/registry/drains/{drain}</b></h4>
+            <p>This API allows the management of detailes registry of a drain.</p>
+            
+            <p><b>GET</b></p>
+            <p>Returns the detail of a drain with the indication of the formula in casa of a virtual drain. </p>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="registry-drains-drain-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="registry-drains-drain-get-expand-btn">Expand</button>
+            <div class="code" id="registry-drains-drain-get"></div>
+            
+            <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
+            
+        </section>
+        <section id="measures">
+            <div class="page-header">
+                <h2>Measures </h2>
+            </div>
+            <p>In this section are described the API for reading the measures in the database</p>
+            <h4><b>/measure/instants/{drain}</b></h4>
+            
+            <p><b>GET</b></p>
+            <p>Returns the valus of a virtual or real drain. </p>
+            <p><b>Result</b></p>
+            <div class="code" id="measure-instants-drain-get"></div>
+            
+            <h4><b>/measure/details/{drain}</b></h4>
+            <h4><b>/measure/history/{drain}</b></h4>
+            <p><b>GET</b></p>
+            <p>Both API behave in the same way. The only thing that chages is the detail level: details returns data every 10 minutes while history return data every hour.</p>
+            <p>Allowed parameters are:</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Values</th>
+                        <th>Description</th>
+                        <th>Optional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>start</td>
+                        <td>Date (yyyy-MM-dd'T'HH:mm:ssZ)<br>
+                            Format ISO 8601</td>
+                        <td>Indicates the date of start for the request<br>
+                        (default: one hour before end for details and 2 hour before end for 10 hour for history)</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>Date (yyyy-MM-dd'T'HH:mm:ssZ)<br>
+                        Format ISO 8601</td>
+                        <td>Indicates the date of end for the request<br>
+                        (default: now)</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>timeAggregation</td>
+                        <td></td>
+                        <td>Indicates the temporal aggregation level of data<br>
+                       Possible values: YEAR, MONTH, DAY, HOUR, MINUTE <br>
+                        (default: MINUTE)</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>measureArregation</td>
+                        <td></td>
+                        <td>Indicate the aggregation function. Supported function are AVG, SUM, MAX, MIN. <br>
+                            Overrides the aggregationFunction of the measure</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="measure-detail-history-drain-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="measure-detail-history-drain-get-expand-btn">Expand</button>
+            <div class="code" id="measure-detail-history-drain-get"></div>
+            
+            <h4><b>/measure/details/time</b></h4>
+            <h4><b>/measure/history/time</b></h4>
+            <p><b>GET</b></p>
+            <p>Returns the range of time of stored measures. In such a way it is possible to know the date of start and end of measures.</p>
+            <p><b>Result</b></p>
+            <div class="code" id="measure-detail-history-time-get"></div>
+            
+            <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
+            
+        </section>
+        <section id="confort">
+            <div class="page-header">
+                <h2>Confort</h2>
+            </div>
+            <p>Management of indicators of climatic confort </p>
+            <h4><b>/confort/indicators</b></h4>
+            <p><b>GET</b></p>
+            <p>Returns the list of all the indicators present in the system:</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Values</th>
+                        <th>Description</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>start</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indicates the start datetime for calculating the result of a votation<br>
+                        (default: datetime at the moment of GET request)</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indicates the end datetime for calculating the result of a votation<br>
+                        (default: datetime start less 1 hour)</td>                     
+                    </tr>
+                </tbody>
+            </table>
+            <p><b>Result</b></p>
+            <div class="code" id="confort-indicator-get"></div>
+            <p>If start and end are not present in the request, the result refers to last hour.</p>
+            <p><b>POST</b></p>
+            <p><b>Request</b></p>
+            <div class="code" id="confort-indicator-post"></div>
+            <p>Allows to modify/create data of a confort indicator</p>
+            <p> If the id is already present in the database, the system proceeds updating of related information.</p>
+            
+            <h4><b>/confort/indicators/{name}</b></h4>
+            <p>Detail management of a confort indicator</p>
+            
+            <p><b>GET</b></p>
+           
+            <p>Returns the details of a certain indicator </p>
+            <p><b>Result</b></p>
+            <div class="code" id="confort-indicator-name-get"></div>
+            <h4><b>/confort/indicators/{name}/options</b></h4>
+            <p>Management of vote option for a certain indicator </p>
+            <p><b>GET</b></p>
+            <p>Return the available option for votation of a certain indicator (options depends on indicator type)</p>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="confort-indicator-name-options-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="confort-indicator-name-options-get-expand-btn">Expand</button>
+            <div class="code" id="confort-indicator-name-options-get"></div>
+            
+            <h4><b>/confort/indicators/{name}/votes</b></h4>
+            <p>Management of votes of an indicator</p>
+            <p><b>GET</b></p>
+            <p>Returns the list of votes for an indicator</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>start</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indicates the start datetime for votes selection<br>
+                        (default: datetime at the moment of GET request)</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>Date (dd-MM-yyyy HH:mm:ss)</td>
+                        <td>Indicates the end datetime for votes selection<br>
+                        (default: datetime less 1 hour)</td>                     
+                    </tr>
+                </tbody>
+            </table>
+            <p><b>Result</b></p>
+            <button class="btn btn-default json-collapse" id="confort-indicator-name-votes-get-collapse-btn">Collapse</button>
+            <button class="btn btn-default json-expand" id="confort-indicator-name-votes-get-expand-btn">Expand</button>
+            <div class="code" id="confort-indicator-name-votes-get"></div>
+            
+            <p>If start and end are not present in the request, the result refers to last hour.</p>
+            <p><b>POST</b></p>
+            <p>Allow users to express theri opinio about an indicator. Allowed values are supplied by the request confort/indicators/{name}/options:</p>
+            <p><b>Request</b></p>
+            <div class="code" id="confort-indicator-name-votes-post"></div>
+            
+            <p class="pull-right"><a href="#">{{ site.t[page.lang].back_to_top }}</a></p>
+            
+        </section>
+    </div>
+</div>

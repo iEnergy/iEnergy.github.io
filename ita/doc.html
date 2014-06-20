@@ -76,7 +76,7 @@ active: documentation
                         <td>start</td>
                         <td>Date (yyyy-MM-dd'T'HH:mm:ssZ)<br>
                             Formato ISO 8601</td>
-                        <td>Indica la data di invio da cui fare la ricerca<br>
+                        <td>Indica la data di invio da cui fare la richiesta<br>
                         (default: una ora prima di end per details e 2 ore per 10 ore per history)</td>
                         <td>Yes</td>
                     </tr>
@@ -84,7 +84,7 @@ active: documentation
                         <td>end</td>
                         <td>Date (yyyy-MM-dd'T'HH:mm:ssZ)<br>
                         Formato ISO 8601</td>
-                        <td>Indica data di fine su cui effettuare la ricerca<br>
+                        <td>Indica data di fine su cui effettuare la richiesta<br>
                         (default: now)</td>
                         <td>Yes</td>
                     </tr>
@@ -159,7 +159,7 @@ active: documentation
             <p><b>POST</b></p>
             <p><b>Request</b></p>
             <div class="code" id="confort-indicator-post"></div>
-            <p>Permette di modificare/creare i dati relativi ad in indicatore di confort</p>
+            <p>Permette di modificare/creare i dati relativi ad un indicatore di confort</p>
             <p>Nel caso il nome dell'indicatore sia già stato definito, l'applicazione si occupa di effettuare l'aggiornamento dell'indicatore già esistente.</p>
             
             <h4><b>/confort/indicators/{name}</b></h4>
@@ -215,7 +215,7 @@ active: documentation
             
             <p>Se non vengono passati start/end si calcola il risultato sulle votazioni dell'utima ora</p>
             <p><b>POST</b></p>
-            <p>Permette ad un utente di esprimere la propria opinione in merito ad un dato indicatore, i valori permessi sono forniti alla chiamata confort/indicators/{name}/options:</p>
+            <p>Permette ad un utente di esprimere la propria opinione in merito ad un dato indicatore, i valori permessi sono forniti dalla chiamata confort/indicators/{name}/options:</p>
             <p><b>Request</b></p>
             <div class="code" id="confort-indicator-name-votes-post"></div>
             
