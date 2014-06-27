@@ -20,3 +20,17 @@ li.list-group-item.active a{
     font-family: monospace;
     border:#080808 dashed thin;
 }
+/*_____________________________________
+
+FOOTER
+______________________________________*/
+footer p{
+    line-height: 50px;
+}
+
+.footer-navbar{
+    margin-bottom: 0px !important;
+    padding: 0px;
+    position: absolute;
+    width: 100%;
+}
